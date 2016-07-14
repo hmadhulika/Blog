@@ -1,0 +1,117 @@
+<html>
+<head>
+<h1>Top rated doctors</h1>
+<style>
+form {
+                width:500px;
+                margin:50px auto;
+				float:inherit;
+}
+.search {
+                padding:8px 15px;
+                background:#E41114;
+                border:0px solid #dbdbdb;
+}
+.button {
+                position:relative;
+                padding:6px 15px;
+                left:-8px;
+                border:2px solid #207cca;
+                background-color:#207cca;
+                color:#fafafa;
+}
+.button:hover  {
+                background-color:#fafafa;
+                color:#207cca;
+}
+</style>
+</head>
+<form>
+                                <input type="text" placeholder="Search..." required>
+                                <input type="button" value="Search">
+</form>
+</html>
+
+
+<?php
+$username = "root";
+$password = "";
+$hostname = "localhost"; 
+error_reporting(E_ALL ^ (E_NOTICE | E_WARNING | E_DEPRECATED));
+//connection to the database
+$dbhandle = mysql_connect($hostname, $username, $password) 
+ or die("Unable to connect to MySQL");
+//echo "Connected to MySQL<br>";
+
+//select a database to work with
+$selected = mysql_select_db("smartcity",$dbhandle) 
+  or die("Could not select smart city");
+
+//execute the SQL query and return records
+$result = mysql_query("SELECT *FROM doctors");
+
+//fetch tha data from the database 
+while ($row = mysql_fetch_array($result)) {
+   //echo "Name:".$row{'name'}." photo:".$row{'photo'}; //display the results
+      
+   ?> 
+   <html>
+   <head>
+   
+   
+  <meta charset=utf-8 />
+  <title></title>
+  <style>
+    div.container {
+      display:inline-block;
+    }
+
+    p {
+      text-align:center;
+    }
+  </style>
+</head>
+   <div class="container">
+   <table cellpadding="2" cellspacing="0" bgcolor="#8E8585" bordercolor="#161515">
+   <tr>
+   <td><img src="<?php echo $row{'photo'} ?>" height="150" width="150"/></td>
+   </tr>
+   <tr>
+   <td><h3>Name:</h3></td>
+   <td><h5><?php echo $row{'name'} ?></h5></td>
+   <tr/>
+   <tr>
+   <td><h3>Registration no</h3></td>
+   <td><h5><?php echo $row{'Regno'} ?></h5>
+   </td></tr>
+   <tr>
+   <td><h3>Rating</h3></td>
+   <td><h5><?php echo $row{'rating'} ?>/5</h5></td>
+   <tr/>
+   <tr>
+   <tr>
+   <td><h3>Mobile no:</h3></td>
+   <td><h5><?php echo $row{'mobile'} ?></h5></td>
+   <tr/>
+   <tr>
+   <tr>
+   <td><h3>Adress:</h3></td>
+   <td><h5><?php echo $row{'adress'} ?></h5></td>
+   <tr/>
+   <tr>
+   <td><a href="#" class="paulund_modal"><h5>See what others have to say about him</h5></a></td>
+   </tr>
+   
+   
+   <hr>
+   
+</table>
+</div>   
+   
+
+</html>
+<?php
+}
+//close the connection
+mysql_close($dbhandle);
+?>
